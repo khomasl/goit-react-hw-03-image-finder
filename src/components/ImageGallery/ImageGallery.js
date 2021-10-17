@@ -83,9 +83,12 @@ export class ImageGallery extends Component {
       return (
         gallery.length > 0 && (
           <>
-            <ul className="ImageGallery" onClick={handleImageClick}>
+            <ul className="ImageGallery">
               {gallery.map((image) => (
-                <ImageGalleryItem image={image} />
+                <ImageGalleryItem
+                  image={image}
+                  onClickImage={handleImageClick}
+                />
               ))}
             </ul>
             <Button onClick={handleClick} />
