@@ -18,20 +18,26 @@ export class ImageGallery extends Component {
     image: {},
   }
 
+  scrolling = () =>
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth',
+    })
+
   fetch() {
     newPixabayFetch
       .searchImages()
       .then((gallery) => {
-        this.state.status === 'pending'
-          ? this.setState({ gallery })
-          : this.setState((prev) => ({
-              gallery: [...prev.gallery, ...gallery],
-            }))
+        if (this.state.status === 'pending') {
+          this.setState({ gallery })
+        } else {
+          this.setState((prev) => ({
+            gallery: [...prev.gallery, ...gallery],
+          }))
+          this.scrolling()
+        }
+
         this.setState({ status: 'success' })
-        window.scrollTo({
-          top: document.documentElement.scrollHeight,
-          behavior: 'smooth',
-        })
       })
       .catch((err) => {
         this.setState({ status: 'error' })
